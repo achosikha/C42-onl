@@ -20,6 +20,20 @@ public class MyMain {
         useTernaryOperator();
     }
 
+    public static void calculateAB(){
+        int a;
+        int b;
+        int c;
+
+        b = 10;
+        c = 25;
+
+        // a = 1/(4 + b + c)
+        a = 1/(4 + b + c);
+
+        System.out.println("Sum of a: " + a);
+    }
+
     public static void useTernaryOperator(){
         // Если, например, Арчил старше Вадима, тогда выведи А
         // Если наоборот выведи Б - сокращенный тернарный оператор
