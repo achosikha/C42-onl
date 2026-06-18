@@ -39,6 +39,7 @@ public class StudentHomework {
         System.out.println("Summa vseh elementov: " + sum);
         System.out.println("----------------------");
     }
+
     public static void CreationChess(){
         System.out.println("2.");
         String[][] board = new String[8][8];
