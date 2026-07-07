@@ -4,6 +4,9 @@ import lesson_7_OOP.animal.Animal;
 import lesson_7_OOP.animal.Lion;
 import lesson_7_OOP.animal.Wolf;
 import lesson_7_OOP.shop.MyShop;
+import lesson_8_polym_static.Car;
+import lesson_8_polym_static.Opel;
+import lesson_8_polym_static.Porsche;
 
 public class Main {
     static void main() {
@@ -17,7 +20,31 @@ public class Main {
             // одном пакете
         // Inheritance - Наследование, объекты перенимают друг у друга свойства и поведение
         // Polymorphism - ОДИН ИНТЕРФЕЙС, МНОЖЕСТВЕННАЯ РЕАЛИЗАЦИЯ
-        createAnimal();
+        getCars();
+    }
+
+    public static void getCars(){
+        Car general = new Car("Bentley", "B-918", 2016,
+                    238111L, 320, 60);
+
+        System.out.println(general);
+        general.getSuperInfo();
+
+        Car porsche = new Porsche("Porsche", "P-111", 2020,
+                222L, 380, 60);
+
+        System.out.println("Call PORSCHE getSuperInfo() method which is FINAL.");
+        porsche.getSuperInfo();
+
+        Car opel = new Opel("Opel", "Astra", 2002,
+                1288111L, 240, 40);
+
+        System.out.println(Car.getCarCounter());
+    }
+
+    public static void getClassThis(){
+        Animal animal = new Animal("Wolf", "Jane", "Grey", 2, 145.5);
+        System.out.println(animal);
     }
 
     public static void createAnimal(){
