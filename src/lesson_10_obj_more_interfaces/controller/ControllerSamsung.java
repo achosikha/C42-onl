@@ -1,7 +1,7 @@
-package lesson_9_abstract_interf.remoteController;
+package lesson_10_obj_more_interfaces.controller;
 
-public class ControllerSamsung extends Controller{
-    protected ControllerSamsung(String controllerCompany, String controllerModel, String controllerProductionYear) {
+public class ControllerSamsung extends Controller {
+    public ControllerSamsung(String controllerCompany, String controllerModel, int controllerProductionYear) {
         super(controllerCompany, controllerModel, controllerProductionYear);
     }
 
@@ -58,5 +58,20 @@ public class ControllerSamsung extends Controller{
     @Override
     public void channelDown() {
 
+    }
+
+    @Override
+    public void initiate() {
+        System.out.println("Welcome to initiate() that comes from InternetController and TVController.");
+    }
+
+    @Override
+    public void makeRemoteCall() {
+        System.out.println("Remote CALL is being DONE.");
+    }
+
+    @Override
+    public void cloneObject(Object obj) {
+        //
     }
 }
