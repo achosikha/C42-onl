@@ -17,7 +17,7 @@ public class MainThreads {
         // эти внутренние процессы называются ПОТОКАМИ
         // Когда вы создаете программу у вас есть ГЛАВНЫЙ ПОТОК - Thread, он курирует работу абсолютно всей программы.
         // Если у вас закрывается ГЛАВНЫЙ ПОТОК, то заканчивается и программа, т.е. процесс.
-        useJoinMultipleThreads();
+        useDaemonThread();
     }
 
     public static void useMainThread(){
@@ -227,4 +227,73 @@ public class MainThreads {
         // Раньше им останавливали потоки, сейчас используют join(), wait()
         // t2.stop();
     }
+
+    // Потоки-демоны и виртуальные потоки
+    // Если что, мой совет для просто понимания прочитать ВИРТУАЛЬНЫЕ ПОТОКИ - Virtual Threads
+    // Daemon thread
+    public static void useDaemonThread(){
+        // Обычный поток не может быть прерван, пока он не завершится
+        // JVM обязан дождаться выполнения всех обычных потоков
+        // После этого завершится ваша программа
+        Thread regularThread = new Thread(() -> {
+            for (int index = 1; index <= 15; index++){
+                System.out.println("Regular Thread: " + index);
+                try{
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Your regular Thread has been stopped.");
+                    return;
+                }
+            }
+            System.out.println("Your regular Thread has successfully ended.");
+        });
+
+        // Прежде, чем создать Демон-поток, надо его сделать из обычного потока
+        // Нельзя автоматически создать Демон-поток
+        Thread daemonThread = new Thread(() -> {
+            int counter = 1;
+
+            while(true){
+                System.out.println("Daemon-thread: " + counter);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Your Daemon-thread has been intercepted.");
+                    return;
+                }
+                counter++;
+            }
+        });
+
+        // Превратим наш поток daemonThread в поток-демон
+        // Задать ему статус демона нужна до начала до использования метода start()
+        // Потом уже невозможно
+        daemonThread.setDaemon(true);
+
+        System.out.println("Is regularThread is daemon thread? " + regularThread.isDaemon());
+        System.out.println("Is daemonThread is daemon thread? " + daemonThread.isDaemon());
+
+        // Start
+        regularThread.start();
+        daemonThread.start();
+
+        System.out.println("Main поток работает отдельно, как главный...");
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Main закончил свою работу...");
+
+        // Демон поток работает в фоновом режиме, выполняет какие-то задачи, но не является
+        // ключевым для работы программы - т.е. не по его состоянию учитывается нужно закрыть процесс или нет
+        // а по обычным потокам. Их выполнение - обязательно, виртуальная машина не может завершиться без выполнения
+        // условия завершения всех ОБЫЧНЫХ ПОТОКОВ
+        // Если все обычные потоки завершены, но демоны-потоки продолжают работать, этн не преграда, программа
+        // может спокойно завершиться.
+    }
+
+    // !!! Самостоятельно обследовать и написать часть кода с ключевым словом synchronized !!!
 }
